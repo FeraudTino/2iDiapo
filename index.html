@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Diapo</title>
+    </head>
+    <body>
+        <div class="illustration">
+            <img src="img/1.jpg" id="image" width="100%" alt="">
+            <br>
+            <button onclick="precedent();">Précédent</button>
+            <button onclick="suivant();">Suivant</button>
+            <button id="btnPlay" onclick="play();">Play</button>
+        </div>
+    </body>
+</html>
+<script>
+    var mesPhotos = ["img/1.jpg", "img/2.jpg", "img/3.jpg"];
+    var imageEnCours = 0;
+    var pause = 0;
+    var t;
+
+    function play(){
+        
+        if(pause == 0){
+            pause = 1;
+            suivantAuto();
+            document.getElementById("btnPlay").innerHTML = "Pause";
+        }else if(pause == 1){
+            clearTimeout(t);
+            pause = 0;
+            document.getElementById("btnPlay").innerHTML = "Play";
+        }
+
+    }
+
+    function suivantAuto(){
+         t = setTimeout(function(){ suivant(); },1500);
+    }
+
+    function suivant(){
+        if(imageEnCours < mesPhotos.length - 1){
+            imageEnCours++;
+        }else{
+            imageEnCours = 0;
+        }
+
+        let image = document.getElementById("image");
+        image.src = mesPhotos[imageEnCours];
+
+        if(pause == 1){
+            suivantAuto();
+        }
+        
+
+    }
+
+    function precedent(){
+        if(imageEnCours <= 0){
+            imageEnCours = mesPhotos.length - 1;
+        }else{
+            imageEnCours--;
+        }
+
+        let image = document.getElementById("image");
+        image.src = mesPhotos[imageEnCours];
+
+    }
+
+    console.log(mesPhotos[0]);
+
+</script>
